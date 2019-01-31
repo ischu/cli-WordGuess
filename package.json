@@ -1,0 +1,22 @@
+{
+  "name": "cli-wordguess",
+  "version": "1.0.0",
+  "description": "command line hangman game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ischu/cli-WordGuess.git"
+  },
+  "author": "ischu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ischu/cli-WordGuess/issues"
+  },
+  "homepage": "https://github.com/ischu/cli-WordGuess#readme",
+  "dependencies": {
+    "inquirer": "^6.2.2"
+  }
+}
