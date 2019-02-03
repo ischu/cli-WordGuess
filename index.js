@@ -1,13 +1,15 @@
 const Word = require("./Word");
+const fs = require("fs");
 const inquirer = require("inquirer");
-let secretWord = "happy";
+let wordArr = ["hello", "goodbye", "mouse", "toothpaste", "delete"];
+let secretWord = pickWord(wordArr);
 let guessCount = 10;
 let word = new Word(secretWord);
 
 // the word object is set as argument so it can be redefined 
 function gameLoop(word) {
     // prints string of word with hidden/revealed characters
-    console.log(word.makeString());
+    console.log(word.shownString());
     inquirer.prompt([
         {
             type: "input",
@@ -27,15 +29,15 @@ function gameLoop(word) {
         // check if guessed letter is in word
         word.checkLetter(user.guess);
         // one less guess
-        guessCount -=1;
+        guessCount -= 1;
         // check if game is lost or won. Otherwise, loop through function again
-        if (guessCount === 0) {
-            console.log(word.makeString());
+        if (guessCount < 0) {
+            console.log(word.shownString());
             console.log("You Lose!");
             playAgain();
-            // win condition: no _ left to be guessed
-        } else if (!word.makeString().includes("_")) {
-            console.log(word.makeString());
+            // win condition: no blanks left to be guessed
+        } else if (!word.shownString().includes("_")) {
+            console.log(word.shownString());
             console.log("You Win!");
             playAgain();
         } else {
@@ -43,7 +45,7 @@ function gameLoop(word) {
         };
     });
 };
-function playAgain(){
+function playAgain() {
     inquirer.prompt([
         {
             type: "confirm",
@@ -51,16 +53,29 @@ function playAgain(){
             message: "Would you like to play again?",
             default: false
         }
-    ]).then(play=>{
-        // doesn't change secretWord
-        if(play.again){
-            let nextWord = "ah";
+    ]).then(play => {
+        // needs to change secretWord
+        if (play.again) {
+            let nextWord = pickWord(wordArr);
             let word = new Word(nextWord);
+            guessCount = 10;
             gameLoop(word);
-        }else{
+        } else {
             console.log("THANK YOU FOR PLAYING!");
         }
     })
-}
+};
+function pickWord(wordArr) {
+    let randNum = (Math.ceil(Math.random() * wordArr.length) - 1);
+    let pickedWord = wordArr[randNum];
+    return pickedWord;
+};
 // starts game
 gameLoop(word);
+
+// fs.readFile("wordFile.txt", "utf8", function (err, data) {
+//     if (err) {
+//         throw err
+//     }
+//     wordArr = data.split(" ");
+// });
