@@ -1,15 +1,11 @@
-// * **index.js**: The file containing the logic for the course of the game, which depends on `Word.js` and:
-//   * Randomly selects a word and uses the `Word` constructor to store it
-//   * Prompts the user for each guess and keeps track of the user's remaining guesses
-
 const Word = require("./Word");
 const inquirer = require("inquirer");
 let secretWord = "happy";
 let guessCount = 10;
 let word = new Word(secretWord);
 
-// inquirer prompt for entering letter
-function gameLoop() {
+// the word object is set as argument so it can be redefined 
+function gameLoop(word) {
     // prints string of word with hidden/revealed characters
     console.log(word.makeString());
     inquirer.prompt([
@@ -31,18 +27,41 @@ function gameLoop() {
         // check if guessed letter is in word
         word.guesser(user.guess);
         // one less guess
-        guessCount = guessCount - 1;
-        // turns string with spaces into a normal string
-        revealedWord = word.makeString().split(" ").join("");
+        guessCount -=1;
         // check if game is lost or won. Otherwise, loop through function again
         if (guessCount === 0) {
+            console.log(word.makeString());
             console.log("You Lose!");
-        } else if (revealedWord === secretWord) {
+            playAgain();
+            // win condition: no _ left to be guessed
+        } else if (!word.makeString().includes("_")) {
+            console.log(word.makeString());
             console.log("You Win!");
+            playAgain();
         } else {
-            gameLoop();
+            gameLoop(word);
         };
     });
 };
+function playAgain(){
+    inquirer.prompt([
+        {
+            type: "confirm",
+            name: "again",
+            message: "Would you like to play again?",
+            default: false
+        }
+    ]).then(play=>{
+        // doesn't change secretWord
+        if(play.again){
+            let nextWord = "ah";
+            let word = new Word(nextWord);
+            gameLoop(word);
+        }else{
+            console.log("THANK YOU FOR PLAYING!");
+            // console.clear();
+        }
+    })
+}
 // starts game
-gameLoop();
+gameLoop(word);
