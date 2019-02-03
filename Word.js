@@ -13,13 +13,13 @@ function Word(wordToGuess) {
     };
     // method to create string user will see
     this.shownString = function(){
-        let string = " ";
+        let string = "\n";
         // runs letter.reveal method to display either the letter or "_" then concatenates results
         this.letterArr.forEach(letter => {
             let char = letter.reveal();
             string = string + char +" ";
         });
-        return string;
+        return string+"\n";
     };
     // takes in letter guessed by user
     this.checkLetter = function(guessedLetter){

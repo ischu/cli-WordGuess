@@ -33,12 +33,12 @@ function gameLoop(word) {
         // check if game is lost or won. Otherwise, loop through function again
         if (guessCount < 0) {
             console.log(word.shownString());
-            console.log("You Lose!");
+            console.log("You Lose!\n");
             playAgain();
             // win condition: no blanks left to be guessed
         } else if (!word.shownString().includes("_")) {
             console.log(word.shownString());
-            console.log("You Win!");
+            console.log("You Win!\n");
             playAgain();
         } else {
             gameLoop(word);
@@ -72,10 +72,3 @@ function pickWord(wordArr) {
 };
 // starts game
 gameLoop(word);
-
-// fs.readFile("wordFile.txt", "utf8", function (err, data) {
-//     if (err) {
-//         throw err
-//     }
-//     wordArr = data.split(" ");
-// });
