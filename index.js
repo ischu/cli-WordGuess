@@ -6,7 +6,6 @@ const Word = require("./Word");
 const inquirer = require("inquirer");
 let secretWord = "happy";
 let guessCount = 10;
-let guessedArr = [];
 let word = new Word(secretWord);
 
 // inquirer prompt for entering letter
@@ -29,25 +28,21 @@ function gameLoop() {
             }
         }
     ]).then(user => {
-        // store guessed letter in an array
-        guessedArr.push(user.guess);
-        // check if each letter in array is in secret word
-        guessedArr.forEach(function (letter) {
-            word.guesser(letter);
-        });
+        // check if guessed letter is in word
+        word.guesser(user.guess);
         // one less guess
-        guessCount = guessCount-1;
-        // update revealedWord var
+        guessCount = guessCount - 1;
+        // turns string with spaces into a normal string
         revealedWord = word.makeString().split(" ").join("");
-        // check if game is lost or won, otherwise, loop through function again
+        // check if game is lost or won. Otherwise, loop through function again
         if (guessCount === 0) {
             console.log("You Lose!");
-        }else if(revealedWord==secretWord){
+        } else if (revealedWord === secretWord) {
             console.log("You Win!");
-        }else{
+        } else {
             gameLoop();
         };
-    }); 
+    });
 };
 // starts game
 gameLoop();
