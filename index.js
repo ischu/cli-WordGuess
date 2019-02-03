@@ -25,7 +25,7 @@ function gameLoop(word) {
         }
     ]).then(user => {
         // check if guessed letter is in word
-        word.guesser(user.guess);
+        word.checkLetter(user.guess);
         // one less guess
         guessCount -=1;
         // check if game is lost or won. Otherwise, loop through function again
@@ -59,7 +59,6 @@ function playAgain(){
             gameLoop(word);
         }else{
             console.log("THANK YOU FOR PLAYING!");
-            // console.clear();
         }
     })
 }
