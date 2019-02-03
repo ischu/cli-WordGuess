@@ -10,14 +10,14 @@ function Letter(someLetter){
     // sets letter (argument) to character to guess
     this.hiddenLetter=someLetter;
     this.known=false;
-    this.revealer=()=>{
+    this.reveal=()=>{
         if(this.known){
             return this.hiddenLetter;
         }else{
             return "_";
         }
     };
-    this.checker=(guessedLetter)=>{
+    this.check=(guessedLetter)=>{
         if(guessedLetter===this.hiddenLetter){
             this.known = true;
         }

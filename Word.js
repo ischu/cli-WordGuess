@@ -16,24 +16,26 @@ function Word(wordToGuess) {
         let letter = new Letter(l);
         this.letterArr.push(letter);
     };
-    // method to create string user will see (should this be automatic?)
+    // method to create string user will see automatic
     this.makeString = function(){
         let string = " ";
-        // runs letter.revealer method to display either the letter or "_" then concatenates results
+        // runs letter.reveal method to display either the letter or "_" then concatenates results
         this.letterArr.forEach(letter => {
-            let char = letter.revealer();
+            let char = letter.reveal();
             string = string + char +" ";
         });
         return string;
     };
     // takes in letter guessed by user
     this.guesser = function(guessedLetter){
-        // runs checker() method to compare guess to each letter in word
+        // runs check() method to compare guess to each letter in word
         this.letterArr.forEach(letter =>{
-            letter.checker(guessedLetter);
+            letter.check(guessedLetter);
         });
         // no need to return anything; adjusts the makeString function's output
     };
+    // just plop this in here for now
+    // this.makeString(wordToGuess);
 };
 // export Word constructor
 module.exports = Word;
